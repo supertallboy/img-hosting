@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fullscreen Slideshow – Segment Timer + Links</title>
+  <title>Fullscreen Slideshow – Segment Timer + Links</title>
   <style>
     html,body{margin:0;height:100%;background:#fff;overflow:hidden;}
     .frame{position:fixed;inset:0;border-radius:20px;overflow:hidden;background:#000;}
 
     /* slides */
     .slideshow{position:absolute;inset:0;}
-    .slide{position:absolute;inset:0;opacity:0;transition:opacity .4s linear;pointer-events:auto;}
-    .slide.active{opacity:1;}
+    .slide{position:absolute;inset:0;opacity:0;transition:opacity .4s linear;pointer-events:none;}
+    .slide.active{opacity:1;pointer-events:auto;}
     .slide img{width:100%;height:100%;object-fit:cover;display:block;}
 
     /* segment timer */
@@ -41,7 +41,7 @@
 
     /* build slides + segments */
     projects.forEach((p,idx)=>{
-      /* slide link */
+      // slide link
       const link=document.createElement('a');
       link.className='slide';
       link.href=p.url;
@@ -50,7 +50,7 @@
       link.innerHTML=`<img src="${p.img}" alt="project ${idx+1}">`;
       show.appendChild(link);
 
-      /* segment */
+      // segment
       const seg=document.createElement('div');
       seg.className='seg';
       seg.innerHTML='<div class="fill"></div>';
@@ -78,7 +78,7 @@
         fill.style.width=k<i?'100%':'0';
       });
       const activeFill=segs[i].firstElementChild;
-      void activeFill.offsetWidth;
+      void activeFill.offsetWidth; // force reflow to restart animation
       activeFill.style.animation=`fill ${delay}ms linear forwards`;
     }
 
@@ -87,11 +87,14 @@
       timer=setInterval(()=>next(1),delay);
     }
 
-    /* init */
+    // init
     showSlide(0);
 
-    /* keyboard nav */
-    window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')next(-1);if(e.key==='ArrowRight')next(1);});
+    // keyboard navigation
+    window.addEventListener('keydown',e=>{
+      if(e.key==='ArrowLeft')next(-1);
+      if(e.key==='ArrowRight')next(1);
+    });
   </script>
 </body>
 </html>
