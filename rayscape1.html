@@ -33,26 +33,29 @@
 
     /* title */
     .project-title{
-      position:absolute;top:24px;left:24px;font-size:24px;color:#fff;
+      position:absolute;top:24px;left:24px;font-size:26px;color:#fff;
       pointer-events:none;z-index:2;
     }
 
     /* caption + button */
     .caption-wrapper{
       position:absolute;left:24px;right:24px;bottom:24px;
-      display:flex;justify-content:space-between;align-items:center; /* centered */
-      gap:16px;opacity:0;transform:translateY(10px);
-      transition:opacity .4s ease,transform .4s ease;
+      display:flex;justify-content:space-between;align-items:center;
+      gap:16px;
+      opacity:0;                             /* start transparent   */
+      transition:opacity .4s ease;           /* fade only           */
       pointer-events:none;z-index:2;
     }
-    .image-link:hover .caption-wrapper{opacity:1;transform:translateY(0);}
+    .image-link:hover .caption-wrapper{
+      opacity:1;                             /* fade to opaque      */
+    }
 
     .caption{
-      font-size:12px;line-height:1.3;color:#fff;flex:1 1 200px;min-width:0;
+      font-size:14px;line-height:1.3;color:#fff;flex:1 1 200px;min-width:0;
     }
 
     .visit-btn{
-      flex:0 0 auto;padding:8px 20px;            /* smaller */
+      flex:0 0 auto;padding:8px 20px;
       font-size:16px;color:#fff;
       background:rgba(255,255,255,.25);border:none;border-radius:9999px;
       backdrop-filter:blur(4px);
@@ -68,7 +71,7 @@
 
     <span class="caption-wrapper">
       <span class="caption">Miss nothing. See everything.</span>
-      <span class="visit-btn">Open</span>           <!-- text changed -->
+      <span class="visit-btn">Open</span>
     </span>
 
     <img src="rayscape1.png" alt="Rayscape still">
