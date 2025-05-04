@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>NeueHouse – Image Fill</title>
+  <title>Cadillac – Image Fill</title>
 
   <style>
     /* Helvetica Neue Light first, then fallbacks */
@@ -24,27 +24,27 @@
       position:relative;
       display:block;
       width:100vw; height:100vh;
-      border-radius:22px; overflow:hidden;
+      border-radius:20px; overflow:hidden;
       text-decoration:none; cursor:pointer;
     }
 
-    /* ❶ lighter base overlay + darker‑blurred hover */
+    /* base overlay (bright) + darker‑blurred hover */
     .image-link img{
       width:100%; height:100%;
       object-fit:cover; object-position:center;
       display:block;
-      filter:brightness(0.95);            /* brighter baseline */
+      filter:brightness(0.93);            /* lighter baseline overlay */
       transition:filter 0.4s ease;
       pointer-events:none;
     }
     .image-link:hover img{
-      filter:brightness(0.70) blur(6px);  /* still darkens+blurs on hover */
+      filter:brightness(0.70) blur(6px);  /* darkens & blurs on hover */
     }
 
     /* ——— Always‑visible title ——— */
     .project-title{
       position:absolute; top:24px; left:24px;
-      font-size:22px; color:#fff;
+      font-size:18px; color:#fff;
       pointer-events:none; z-index:2;
     }
 
@@ -62,22 +62,22 @@
       opacity:1; transform:translateY(0);
     }
 
-    /* ❷ smaller caption, will wrap as needed */
+    /* smaller caption font, wraps as needed */
     .caption{
-      font-size:12px;       /* smaller than before */
+      font-size:16px;
       line-height:1.3;
       color:#fff;
-      flex:1 1 200px;       /* allow it to wrap while reserving space for button */
-      min-width:0;          /* let it shrink below its content width */
+      flex:1 1 200px;       /* wrap while leaving room for button */
+      min-width:0;
     }
 
-    /* ——— Visit button ——— */
+    /* pill‑shaped visit button */
     .visit-btn{
       flex:0 0 auto;
       padding:10px 28px;
       font-size:18px; color:#fff;
       background:rgba(255,255,255,0.25);
-      border:none; border-radius:9999px;   /* fully rounded ends */
+      border:none; border-radius:9999px;
       backdrop-filter:blur(4px);
     }
     .image-link:hover .visit-btn{
@@ -86,16 +86,18 @@
   </style>
 </head>
 <body>
-  <a href="https://www.looksmatter.studio/rayscape-looksmatter-studio">
-    <span class="project-title">Rayscape</span>
 
-    <!-- caption + button appear together on hover -->
+  <!-- YOUR PROJECT LINK IS SET HERE -->
+  <a href="https://www.looksmatter.studio/rayscape-looksmatter-studio" class="image-link" target="_blank" rel="noopener">
+    <span class="project-title">Cadillac</span>
+
     <span class="caption-wrapper">
-      <span class="caption">Miss nothing. See everything.</span>
+      <span class="caption">A legacy brand meets a contemporary audience.</span>
       <span class="visit-btn">View</span>
     </span>
 
     <img src="rayscape1.png" alt="Rayscape still">
   </a>
+
 </body>
 </html>
