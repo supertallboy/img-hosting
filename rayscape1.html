@@ -5,7 +5,7 @@
   <title>NeueHouse – Image Fill</title>
 
   <style>
-    /* Helvetica Neue Light if present, else Helvetica/Arial */
+    /* Helvetica Neue Light first, then fallbacks */
     @font-face {
       font-family: 'Helvetica Neue';
       font-weight: 300;
@@ -13,79 +13,84 @@
            local("Helvetica Neue"), local("Helvetica"), local("Arial");
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #fff;
-      overflow: hidden;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-weight: 300;
+    html, body{
+      margin:0; padding:0; height:100%;
+      font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      font-weight:300; background:#fff; overflow:hidden;
     }
 
-    /* ——— Frame ——— */
-    .image-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      border-radius: 20px;
-      overflow: hidden;
-      cursor: pointer;         /* shows it’s interactive */
+    /* ——— Click‑through frame is the link itself ——— */
+    .image-link{
+      position:relative;
+      display:block;
+      width:100vw; height:100vh;
+      border-radius:20px; overflow:hidden;
+      text-decoration:none;          /* remove anchor underline */
+      cursor:pointer;
     }
 
-    .image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      transition: filter 0.4s ease;   /* only blur animates now */
-      pointer-events: none;
+    /* base image gets a subtle dark overlay for readability */
+    .image-link img{
+      width:100%; height:100%;
+      object-fit:cover; object-position:center;
+      display:block;
+      filter:brightness(0.75);        /* ❸ always‑on darker filter */
+      transition:filter 0.4s ease;    /* animate brightness & blur together */
+      pointer-events:none;
     }
 
-    /* Blur—no scale */
-    .image-container:hover img {
-      filter: blur(6px);
+    /* ❶ On hover → darker + blur */
+    .image-link:hover img{
+      filter:brightness(0.55) blur(6px);
     }
 
     /* ——— Always‑visible title ——— */
-    .project-title {
-      position: absolute;
-      top: 24px;
-      left: 24px;
-      font-size: 18px;
-      color: #fff;
-      text-shadow: 0 0 6px rgba(0,0,0,0.4);
-      pointer-events: none;
-      z-index: 2;
+    .project-title{
+      position:absolute; top:24px; left:24px;
+      font-size:18px; color:#fff;
+      /* ❹ no more text‑shadow */
+      pointer-events:none;
+      z-index:2;
     }
 
     /* ——— Hover caption ——— */
-    .caption {
-      position: absolute;
-      left: 24px;
-      bottom: 24px;
-      font-size: 18px;
-      color: #fff;
-      text-shadow: 0 0 6px rgba(0,0,0,0.4);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: none;
-      z-index: 2;
+    .caption{
+      position:absolute; left:24px; bottom:24px;
+      font-size:18px; color:#fff;
+      opacity:0; transform:translateY(10px);
+      transition:opacity 0.4s ease, transform 0.4s ease;
+      pointer-events:none;
+      z-index:2;
+    }
+    .image-link:hover .caption{
+      opacity:1; transform:translateY(0);
     }
 
-    .image-container:hover .caption {
-      opacity: 1;
-      transform: translateY(0);
+    /* ——— “Visit” button ——— */
+    .visit-btn{
+      position:absolute; right:24px; bottom:24px;
+      padding:12px 28px;
+      font-size:18px; color:#fff; background:rgba(255,255,255,0.25);
+      border:none; border-radius:14px;
+      backdrop-filter:blur(4px);        /* frosted‑glass look */
+      pointer-events:none;              /* keep whole frame clickable */
+      z-index:2;
+    }
+    /* light highlight when frame is hovered */
+    .image-link:hover .visit-btn{
+      background:rgba(255,255,255,0.35);
     }
   </style>
 </head>
 <body>
-  <div class="image-container">
-    <span class="project-title">Rayscape</span>
-    <span class="caption">Miss nothig. See everything.</span>
+  <!-- ❷ the whole frame is a link to the project -->
+  <a href="https://your-project-url-here.com" class="image-link">
+    <span class="project-title">NeueHouse</span>
+    <span class="caption">An app built to cultivate community.</span>
+    <span class="visit-btn">Visit</span>
+
+    <!-- background image -->
     <img src="rayscape1.png" alt="Rayscape still">
-  </div>
+  </a>
 </body>
 </html>
