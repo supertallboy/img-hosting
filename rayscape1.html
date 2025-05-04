@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Card – NeueHouse</title>
+
+  <!-- Inter font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    /* --- page setup for the demo (not required in production) --- */
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background:#efefef;
+      display: grid;
+      place-content: center;   /* centers the card in this demo page */
+    }
+
+    /* ---------- CARD ---------- */
+    .card {
+      position: relative;
+      width: clamp(280px, 60vmin, 420px);    /* responsive width */
+      aspect-ratio: 3/5;                     /* keeps a tall ratio */
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 30px rgba(0,0,0,.25);
+      cursor: pointer;
+      isolation: isolate;                    /* keeps backdrop‑filter effects inside */
+    }
+
+    /* Background image */
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter .4s ease;           /* blur + darken on hover */
+    }
+
+    /* Persistent title (always visible) */
+    .card__title {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      margin: 0;
+      font-size: 1.7rem;
+      color: #fff;
+      letter-spacing: .02em;
+      text-shadow: 0 2px 4px rgba(0,0,0,.6);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Overlay that fades in on hover/focus */
+    .card__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity .35s ease;
+      z-index: 2;
+      pointer-events: none;                  /* make overlay ignore clicks if desired */
+    }
+
+    .card__desc {
+      color:#fff;
+      margin: 0 0 16px 0;
+    }
+
+    .card__btn {
+      align-self: flex-end;
+      padding: 10px 24px;
+      font-size: 1rem;
+      color:#fff;
+      border: none;
+      border-radius: 40px;
+      background: rgba(255,255,255,.25);     /* glassy pill */
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: background .3s ease;
+    }
+    .card__btn:hover,
+    .card__btn:focus-visible { background: rgba(255,255,255,.4); }
+
+    /* -------- INTERACTION -------- */
+    .card:hover img,
+    .card:focus-visible img { filter: blur(6px) brightness(.55); }
+
+    .card:hover .card__overlay,
+    .card:focus-visible .card__overlay { opacity: 1; }
+
+    /* optional keyboard focus ring */
+    .card:focus-visible { outline: 3px solid #999; }
+  </style>
+</head>
+<body>
+
+  <article class="card" tabindex="0">
+    <!-- swap in your own PNG here -->
+    <img src="renergia1.png" alt="Preview of the NeueHouse mobile app">
+
+    <h2 class="card__title">NeueHouse</h2>
+
+    <!-- appears on hover/focus -->
+    <div class="card__overlay">
+      <p class="card__desc">An app built to cultivate community.</p>
+      <button class="card__btn">View</button>
+    </div>
+  </article>
+
+</body>
+</html>
