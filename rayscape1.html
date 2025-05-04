@@ -2,24 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Rayscape – Image Fill</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <title>NeueHouse – Image Fill</title>
+
   <style>
+    /* Helvetica Neue Light if present, else Helvetica/Arial */
+    @font-face {
+      font-family: 'Helvetica Neue';
+      font-weight: 300;
+      src: local("HelveticaNeue-Light"), local("Helvetica Neue Light"),
+           local("Helvetica Neue"), local("Helvetica"), local("Arial");
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Inter', sans-serif;
       background: #fff;
-      overflow: hidden;      /* prevent scrollbars */
+      overflow: hidden;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 300;
     }
 
+    /* ——— Frame ——— */
     .image-container {
-      position: relative;    /* establishes containing block for absolutely‑positioned title */
+      position: relative;
       width: 100vw;
       height: 100vh;
       border-radius: 20px;
       overflow: hidden;
+      cursor: pointer;         /* shows it’s interactive */
     }
 
     .image-container img {
@@ -28,26 +39,52 @@
       object-fit: cover;
       object-position: center;
       display: block;
+      transition: filter 0.4s ease;   /* only blur animates now */
       pointer-events: none;
     }
 
-    /* --- NEW --- */
+    /* Blur—no scale */
+    .image-container:hover img {
+      filter: blur(6px);
+    }
+
+    /* ——— Always‑visible title ——— */
     .project-title {
       position: absolute;
-      top: 24px;             /* adjust to taste */
+      top: 24px;
       left: 24px;
-      font-size: 18px;       /* as requested */
-      font-weight: 400;      /* match screenshot’s lighter weight */
-      color: #ffffff;        /* white text */
-      text-shadow: 0 0 6px rgba(0,0,0,0.4); /* subtle halo for legibility */
-      pointer-events: none;  /* ignore clicks */
-      z-index: 2;            /* stay above the image */
+      font-size: 18px;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(0,0,0,0.4);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ——— Hover caption ——— */
+    .caption {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      font-size: 18px;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .image-container:hover .caption {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
   <div class="image-container">
-    <span class="project-title">NeueHouse</span>
+    <span class="project-title">Rayscape</span>
+    <span class="caption">Miss nothig. See everything.</span>
     <img src="rayscape1.png" alt="Rayscape still">
   </div>
 </body>
