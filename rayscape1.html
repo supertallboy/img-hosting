@@ -2,43 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Renergia 1</title>
-
-  <!-- typeface -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-
+  <title>Rayscape – Image Fill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      background: #fff;
       font-family: 'Inter', sans-serif;
-      overflow: hidden;          /* keep scrollbars away */
+      background: #fff;
+      overflow: hidden;          /* prevent scrollbars */
     }
 
     .image-container {
       width: 100vw;
       height: 100vh;
-      border-radius: 20px;
+      border-radius: 20px;       /* same rounded‑corner look */
       overflow: hidden;
-      pointer-events: none;      /* keeps the page click‑through */
+      box-shadow: none;
+      pointer-events: none;      /* ignore clicks if it’s purely decorative */
     }
 
     .image-container img {
       width: 100%;
       height: 100%;
-      object-fit: cover;         /* fill, cropping if needed */
-      display: block;
+      object-fit: cover;         /* key line: scales & crops to fill */
+      object-position: center;   /* keep the focal point centred */
+      display: block;            /* removes default inline‑img spacing */
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
   <div class="image-container">
-    <!-- adjust the filename as needed -->
-    <img src="https://raw.githubusercontent.com/supertallboy/img-hosting/main/renergia1.png"
-         alt="Renergia 1 hero image" />
+    <img src="rayscape1.png" alt="Rayscape still">
   </div>
 </body>
 </html>
