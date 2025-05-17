@@ -4,34 +4,43 @@
   <meta charset="UTF-8" />
   <title>Fullscreen Slideshow – Segment Timer + Links</title>
   <style>
-    html,body{margin:0;height:100%;background:#fff;overflow:hidden;}
-    .frame{position:fixed;inset:0;border-radius:20px;overflow:hidden;background:#000;}
+    html, body { margin: 0; height: 100%; background: #fff; overflow: hidden; }
+    .frame { position: fixed; inset: 0; border-radius: 20px; overflow: hidden; background: #000; }
 
     /* slides */
-    .slideshow{position:absolute;inset:0;}
-    .slide{position:absolute;inset:0;opacity:0;transition:opacity .4s linear;pointer-events:none;}
-    .slide.active{opacity:1;pointer-events:auto;}
-    .slide img{width:100%;height:100%;object-fit:cover;display:block;}
+    .slideshow { position: absolute; inset: 0; }
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity .4s linear;
+      pointer-events: none;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+    .slide img, .slide video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
 
     /* segment timer */
-    .segments{
-      position:fixed;bottom:32px;left:50%;transform:translateX(-50%);
-      display:flex;gap:4px;width:300px;z-index:20;align-items:center;
+    .segments {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 4px; width: 300px; z-index: 20;
+      align-items: center;
     }
-    .seg{
-      position:relative;
-      flex:1 1 0;height:1px;background:#ffffff55;border-radius:2px;cursor:pointer;
-      transition:height .2s ease;
+    .seg {
+      position: relative;
+      flex: 1 1 0; height: 1px;
+      background: #ffffff55; border-radius: 2px;
+      cursor: pointer; transition: height .2s ease;
     }
-    /* invisible padding hit‑area around each segment */
-    .seg::before{
-      content:"";position:absolute;inset:-6px; /* 6px halo on all sides */
+    .seg::before {
+      content: ""; position: absolute; inset: -6px;
     }
-    .seg.active{height:3px;background:#ffffffaa;}
-    .seg:hover{height:3px;}
+    .seg.active { height: 3px; background: #ffffffaa; }
+    .seg:hover { height: 3px; }
 
-    .fill{width:0;height:100%;background:#fff;}
-    @keyframes fill{from{width:0}to{width:100%}}
+    .fill { width: 0; height: 100%; background: #fff; }
+    @keyframes fill { from { width: 0 } to { width: 100% } }
   </style>
 </head>
 <body>
@@ -39,65 +48,83 @@
   <div class="segments" id="segs"></div>
 
   <script>
-    const projects=[
-      {img:'rayscape1.png',url:'https://www.looksmatter.studio/rayscape-looksmatter-studio'},
-      {img:'renergia1.png',url:'https://www.looksmatter.studio/renergia-looksmatter-studio'},
-      {img:'nexdoo1.png',url:'https://www.looksmatter.studio/nexdoo-looksmatter-studio'},
-      {img:'wunderpark1.png',url:'https://www.looksmatter.studio/wunderpark-looksmatter-studio'},
-      {img:'globalairlines1.png',url:'https://www.looksmatter.studio/global-airlines-looksmatter-studio'}
+    const projects = [
+      { type: 'image', img: 'rayscape1.png', url: 'https://www.looksmatter.studio/rayscape-looksmatter-studio' },
+      { type: 'image', img: 'renergia1.png', url: 'https://www.looksmatter.studio/renergia-looksmatter-studio' },
+      { type: 'video', img: 'studiodua.mp4', url: 'https://www.looksmatter.studio/studio-dua-looksmatter-studio' },
+      { type: 'image', img: 'nexdoo1.png', url: 'https://www.looksmatter.studio/nexdoo-looksmatter-studio' },
+      { type: 'image', img: 'globalairlines1.png', url: 'https://www.looksmatter.studio/global-airlines-looksmatter-studio' }
     ];
 
-    const delay=7000;
+    const delay = 5000;
 
-    const show=document.getElementById('show');
-    const segsWrap=document.getElementById('segs');
+    const show = document.getElementById('show');
+    const segsWrap = document.getElementById('segs');
 
-    projects.forEach((p,idx)=>{
-      const link=document.createElement('a');
-      link.className='slide';
-      link.href=p.url;link.target='_blank';link.rel='noopener';
-      link.innerHTML=`<img src="${p.img}" alt="project ${idx+1}">`;
+    projects.forEach((p, idx) => {
+      const link = document.createElement('a');
+      link.className = 'slide';
+      link.href = p.url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+
+      if (p.type === 'video') {
+        link.innerHTML = `
+          <video autoplay muted loop playsinline>
+            <source src="${p.img}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>`;
+      } else {
+        link.innerHTML = `<img src="${p.img}" alt="project ${idx + 1}">`;
+      }
+
       show.appendChild(link);
 
-      const seg=document.createElement('div');
-      seg.className='seg';
-      seg.innerHTML='<div class="fill"></div>';
-      seg.onclick=()=>showSlide(idx);
+      const seg = document.createElement('div');
+      seg.className = 'seg';
+      seg.innerHTML = '<div class="fill"></div>';
+      seg.onclick = () => showSlide(idx);
       segsWrap.appendChild(seg);
     });
 
-    const slides=[...document.querySelectorAll('.slide')];
-    const segs=[...document.querySelectorAll('.seg')];
-    let i=0;let timer;
+    const slides = [...document.querySelectorAll('.slide')];
+    const segs = [...document.querySelectorAll('.seg')];
+    let i = 0;
+    let timer;
 
-    function showSlide(n){
-      i=(n+slides.length)%slides.length;
-      slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    function showSlide(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => s.classList.toggle('active', k === i));
       updateSegments();
       restartTimer();
     }
 
-    function next(n=1){showSlide(i+n);} // autoplay & keys
-
-    function updateSegments(){
-      segs.forEach((seg,k)=>{
-        const fill=seg.firstElementChild;
-        seg.classList.toggle('active',k===i);
-        fill.style.animation='none';
-        fill.style.width=k<i?'100%':'0';
-      });
-      const activeFill=segs[i].firstElementChild;
-      void activeFill.offsetWidth;
-      activeFill.style.animation=`fill ${delay}ms linear forwards`;
+    function next(n = 1) {
+      showSlide(i + n);
     }
 
-    function restartTimer(){
+    function updateSegments() {
+      segs.forEach((seg, k) => {
+        const fill = seg.firstElementChild;
+        seg.classList.toggle('active', k === i);
+        fill.style.animation = 'none';
+        fill.style.width = k < i ? '100%' : '0';
+      });
+      const activeFill = segs[i].firstElementChild;
+      void activeFill.offsetWidth; // trigger reflow
+      activeFill.style.animation = `fill ${delay}ms linear forwards`;
+    }
+
+    function restartTimer() {
       clearInterval(timer);
-      timer=setInterval(()=>next(1),delay);
+      timer = setInterval(() => next(1), delay);
     }
 
     showSlide(0);
-    window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')next(-1);if(e.key==='ArrowRight')next(1);});
+    window.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') next(-1);
+      if (e.key === 'ArrowRight') next(1);
+    });
   </script>
 </body>
 </html>
