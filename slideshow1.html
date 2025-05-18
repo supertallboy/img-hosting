@@ -4,47 +4,103 @@
   <meta charset="UTF-8" />
   <title>Fullscreen Slideshow – Segment Timer + Links</title>
   <style>
-    html, body { margin: 0; height: 100%; background: #fff; overflow: hidden; }
-    .frame { position: fixed; inset: 0; border-radius: 20px; overflow: hidden; background: #000; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .frame {
+      position: fixed;
+      inset: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+    }
 
     /* slides */
-    .slideshow { position: absolute; inset: 0; }
+    .slideshow {
+      position: absolute;
+      inset: 0;
+    }
+
     .slide {
-      position: absolute; inset: 0;
-      opacity: 0; transition: opacity .4s linear;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .4s linear;
       pointer-events: none;
     }
-    .slide.active { opacity: 1; pointer-events: auto; }
-    .slide img, .slide video {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide img,
+    .slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9); /* default brightness */
     }
 
     /* segment timer */
     .segments {
-      position: fixed; bottom: 32px; left: 50%;
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
       transform: translateX(-50%);
-      display: flex; gap: 4px; width: 300px; z-index: 20;
+      display: flex;
+      gap: 4px;
+      width: 300px;
+      z-index: 20;
       align-items: center;
     }
+
     .seg {
       position: relative;
-      flex: 1 1 0; height: 1px;
-      background: #ffffff55; border-radius: 2px;
-      cursor: pointer; transition: height .2s ease;
+      flex: 1 1 0;
+      height: 1px;
+      background: #ffffff55;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: height .2s ease;
     }
-    .seg::before {
-      content: ""; position: absolute; inset: -6px;
-    }
-    .seg.active { height: 3px; background: #ffffffaa; }
-    .seg:hover { height: 3px; }
 
-    .fill { width: 0; height: 100%; background: #fff; }
-    @keyframes fill { from { width: 0 } to { width: 100% } }
+    .seg::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+    }
+
+    .seg.active {
+      height: 3px;
+      background: #ffffffaa;
+    }
+
+    .seg:hover {
+      height: 3px;
+    }
+
+    .fill {
+      width: 0;
+      height: 100%;
+      background: #fff;
+    }
+
+    @keyframes fill {
+      from { width: 0 }
+      to { width: 100% }
+    }
   </style>
 </head>
 <body>
-  <div class="frame"><div class="slideshow" id="show"></div></div>
+  <div class="frame">
+    <div class="slideshow" id="show"></div>
+  </div>
   <div class="segments" id="segs"></div>
 
   <script>
@@ -123,6 +179,7 @@
     }
 
     showSlide(0);
+
     window.addEventListener('keydown', e => {
       if (e.key === 'ArrowLeft') next(-1);
       if (e.key === 'ArrowRight') next(1);
