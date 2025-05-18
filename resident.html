@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resident – Image Fill</title>
+
+  <style>
+    @font-face{
+      font-family:'Helvetica Neue';font-weight:300;
+      src:local("HelveticaNeue-Light"),local("Helvetica Neue Light"),
+          local("Helvetica Neue"),local("Helvetica"),local("Arial");
+    }
+
+    html,body{
+      margin:0;padding:0;height:100%;
+      font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      font-weight:300;background:#fff;overflow:hidden;
+    }
+
+    /* clickable frame */
+    .image-link{
+      position:relative;display:block;width:100vw;height:100vh;
+      border-radius:20px;overflow:hidden;text-decoration:none;cursor:pointer;
+    }
+
+    /* image + hover dark/blur */
+    .image-link img{
+      width:100%;height:100%;object-fit:cover;object-position:center;
+      display:block;filter:brightness(0.93);transition:filter .4s ease;
+      pointer-events:none;
+    }
+    .image-link:hover img{filter:brightness(.70) blur(6px);}
+
+    /* title */
+    .project-title{
+      position:absolute;top:24px;left:24px;font-size:24px;color:#fff;
+      pointer-events:none;z-index:2;
+    }
+
+    /* caption + button */
+    .caption-wrapper{
+      position:absolute;left:24px;right:24px;bottom:24px;
+      display:flex;justify-content:space-between;align-items:center;
+      gap:16px;
+      opacity:0;                             /* start transparent   */
+      transition:opacity .4s ease;           /* fade only           */
+      pointer-events:none;z-index:2;
+    }
+    .image-link:hover .caption-wrapper{
+      opacity:1;                             /* fade to opaque      */
+    }
+
+    .caption{
+      font-size:14px;line-height:1.3;color:#fff;flex:1 1 200px;min-width:0;
+    }
+
+    .visit-btn{
+      flex:0 0 auto;padding:8px 20px;
+      font-size:16px;color:#fff;
+      background:rgba(255,255,255,.25);border:none;border-radius:9999px;
+      backdrop-filter:blur(4px);
+    }
+    .image-link:hover .visit-btn{background:rgba(255,255,255,.35);}
+  </style>
+</head>
+<body>
+
+  <a href="https://www.looksmatter.studio/global-airlines-looksmatter-studio"
+     class="image-link" target="_blank" rel="noopener">
+    <span class="project-title">Resident</span>
+
+    <span class="caption-wrapper">
+      <span class="caption">Where the light connects with the furniture.</span>
+      <span class="visit-btn">Open</span>
+    </span>
+
+    <img src="resident1.png" alt="Resident still">
+  </a>
+
+</body>
+</html>
